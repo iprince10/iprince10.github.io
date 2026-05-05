@@ -1,7 +1,5 @@
 /* PRINCE JHA — PORTFOLIO CSS
    Theme: Light Editorial · Indigo + Coral */
-
-
 :root {
   --bg: #fafaf8;
   --bg-alt: #f4f2ee;
@@ -181,7 +179,7 @@ a {
 }
 
 /* ── HERO ── */
-.hero {
+/* .hero {
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -192,18 +190,21 @@ a {
   margin: 0 auto;
   gap: 2rem;
   position: relative;
-}
-
-/* .hero::before {
-  content: '';
-  position: fixed; inset: 0;
-  background-image:
-    linear-gradient(var(--border-light) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border-light) 1px, transparent 1px);
-  background-size: 40px 40px;
-  opacity: 0.5;
-  pointer-events: none; z-index: 0;
 } */
+
+.hero {
+  min-height: 100svh;
+  /* svh = small viewport height, fixes mobile Chrome address bar bug */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2.5rem;
+  padding-top: var(--nav-h);
+  max-width: 1080px;
+  margin: 0 auto;
+  gap: 2rem;
+  position: relative;
+}
 
 .hero-content {
   position: relative;
@@ -430,6 +431,34 @@ a {
 }
 
 @media (max-width: 768px) {
+
+  .hero {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 1.5rem;
+    padding-top: calc(var(--nav-h) + 1.5rem);
+    gap: 2rem;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero-cta {
+    justify-content: center;
+  }
+
+  .hero-socials {
+    justify-content: center;
+  }
+
+  .hero-right {
+    order: -1;
+    /* puts image above text */
+  }
+
   .hero-img {
     width: 150px;
     height: 150px;
@@ -1050,4 +1079,15 @@ footer {
 .reveal.visible {
   opacity: 1;
   transform: none;
+}
+
+@media (max-width: 480px) {
+  #navbar {
+    padding: 0 1.2rem;
+  }
+
+  .hero {
+    padding-left: 1.2rem;
+    padding-right: 1.2rem;
+  }
 }
