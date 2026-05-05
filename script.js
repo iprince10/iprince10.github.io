@@ -1,6 +1,4 @@
-/* ==========================================
-   PRINCE JHA — PORTFOLIO JS
-   ========================================== */
+// PRINCE JHA — PORTFOLIO JS
 
 // ── HAMBURGER MENU ──
 const hamburger = document.getElementById('hamburger');
@@ -49,12 +47,3 @@ const io = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 revealEls.forEach(el => io.observe(el));
-
-// // ── CONTACT FORM ──
-// function handleForm(e) {
-//   e.preventDefault();
-//   const msg = document.getElementById('form-msg');
-//   const name = document.getElementById('name').value;
-//   msg.textContent = `Thanks ${name}! I'll get back to you soon.`;
-//   e.target.reset();
-// }
