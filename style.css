@@ -179,21 +179,9 @@ a {
 }
 
 /* ── HERO ── */
-/* .hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 2.5rem;
-  padding-top: var(--nav-h);
-  max-width: 1080px;
-  margin: 0 auto;
-  gap: 2rem;
-  position: relative;
-} */
 
 .hero {
-  min-height: 100svh;
+  min-height: min(100svh, 800px);
   /* svh = small viewport height, fixes mobile Chrome address bar bug */
   display: flex;
   align-items: center;
