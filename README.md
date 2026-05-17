@@ -40,5 +40,5 @@ Built using HTML, CSS, and JavaScript with a modular structure, and deployed on 
 
 <h2>Contact</h2>
 <p>
-Feel free to reach out via the contact form on the website for collaboration or opportunities.
+Feel free to reach out via the contact form on the website for collaboration or opportunities :)
 </p>
