@@ -349,7 +349,7 @@ a {
 }
 
 .badge-ring {
-  position: absolute;
+  position:absolute;
   inset: 0;
   border-radius: 50%;
   border: 1.5px solid var(--border);
