@@ -2,7 +2,7 @@
    Theme: Light Editorial · Indigo + Coral */
 :root {
   --bg: #fafaf8;
-  --bg-alt: #f4f2ee;
+  --bg-alt: #fafaf8;    
   --surface: #ffffff;
   --surface-2: #f0eee9;
 
@@ -489,7 +489,7 @@ a {
 
 /* ── SECTIONS ── */
 .section {
-  padding: 6rem 0;
+  padding: 2rem 0;
 }
 
 .section-alt {
@@ -575,7 +575,7 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 1.2rem 0.5rem;
+  padding: 1.1rem 0.5rem;
   border-right: 1px solid var(--border);
   text-align: center;
 }
