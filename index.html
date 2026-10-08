@@ -20,6 +20,7 @@
     <div class="nav-logo">PJ<span class="dot">.</span></div>
     <ul class="nav-links">
       <li><a href="#home">Home</a></li>
+      <li><a href="/blogs/">Blogs</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#projects">Projects</a></li>
       <li><a href="#experience">Experience</a></li>
@@ -33,40 +34,34 @@
 
   <!-- HERO -->
   <section id="home" class="hero section-alt">
-    <div class="hero-content">
-      <p class="hero-tag">BTECH ECE UNderGrad @ Jamia Hamdard</p>
-      <h1 class="hero-name">Prince <span class="accent">Jha</span></h1>
-      <p class="hero-sub">Embedded & Software Engineer. &amp; Building real-time hardware–software solutions.</p>
-      <div class="hero-cta">
-        <a href="#projects" class="btn-primary">View Projects</a>
-        <a href="#contact" class="btn-outline">Get in Touch</a>
-      </div>
-      <div class="hero-socials">
-        <a href="https://linkedin.com/in/iprince10" target="_blank" aria-label="LinkedIn"><i
-            class="fab fa-linkedin-in"></i></a>
-        <a href="https://github.com/iprince10" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-        <a href="https://leetcode.com/_iprince10" target="_blank" aria-label="LeetCode"><i class="fas fa-code"></i></a>
-        <a href="mailto:princejha1456@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
-      </div>
-    </div>
-    <div class="hero-right">
-      <div class="hero-img">
-        <img src="princee.webp" alt="Prince Jha" />
-      </div>
-      <div class="hero-badge">
-        <div class="badge-ring">
-          <span>EMBEDDED</span>
-          <span class="badge-sep">·</span>
-          <span>Software</span>
-          <span class="badge-sep">·</span>
-          <span>Electronics</span>
-          <span class="badge-sep">·</span>
-          <span>DEVELOPER</span>
-          <span class="badge-sep">·</span>
+    <div class="hero-identity">
+        <p class="hero-tag">BTECH ECE UNderGrad @ Jamia Hamdard</p>
+        <h1 class="hero-name">Prince <span class="accent">Jha</span></h1>
+        <p class="hero-sub">Embedded &amp; Software Engineer building real-time hardware–software solutions.</p>
+        <div class="hero-cta">
+          <a href="#projects" class="btn-primary">View Projects</a>
+          <a href="#contact" class="btn-outline">Get in Touch</a>
         </div>
-        <div class="badge-center"><i class="fas fa-microchip"></i></div>
-      </div>
+        <div class="hero-socials">
+          <a href="https://linkedin.com/in/iprince10" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="https://github.com/iprince10" target="_blank" rel="noopener" aria-label="GitHub"><i class="fab fa-github"></i></a>
+          <a href="https://leetcode.com/_iprince10" target="_blank" rel="noopener" aria-label="LeetCode"><i class="fas fa-code"></i></a>
+          <a href="mailto:princejha1456@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        </div>
     </div>
+      <div class="hero-right">
+        <div class="hero-img"><img src="princee.webp" alt="Prince Jha" /></div>
+      </div>
+      <aside class="recent-posts" aria-labelledby="recent-posts-title">
+        <h2 id="recent-posts-title" class="recent-posts-title">MY RECENT POSTS</h2>
+        <a class="recent-post-card" href="/blogs/sd-card-fat32-media-viewer/">
+          <span class="recent-post-kicker">RP2040 · FAT32 · ILI9341</span>
+          <h3>SD Card FAT32 File Explorer &amp; Media Viewer</h3>
+          <p>A bare-metal Pico reads a 32 GB SDHC card, walks FAT32 directories, and streams RGB565 images to an ILI9341 display.</p>
+          <span class="recent-post-read">Read post <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="recent-posts-all" href="/blogs/">All posts <span aria-hidden="true">→</span></a>
+      </aside>
   </section>
 
   <!-- ABOUT -->
@@ -77,7 +72,7 @@
         <div class="about-text">
           <h2 class="section-title">Building at the<br><span class="accent">hardware–software edge.</span></h2>
           <p>I’m a final-year Electronics & Communication Engineering student at Jamia Hamdard, New Delhi, holding
-            a cummulative CGPA of 9.09. My work spans both hardware and software domains including embedded
+            a cummulative CGPA of 9.12. My work spans both hardware and software domains including embedded
             systems, web development, circuit design and sensor interfacing.</p>
           <p>I focus on building end-to-end solutions involving bare-metal programming, IoT pipelines, real-time data
             processing, and full-stack integration. I work across the stack: communication protocols,
@@ -130,7 +125,7 @@
         <div class="project-card">
           <div class="project-number">01</div>
           <div class="project-body">
-            <h3><a href="https://github.com/iprince10/PicoProjects/tree/main/Indicator_RX_DualCore"
+            <h3><a href="https://github.com/iprince10/Wireless_Water_Tank_Level_Monitor"
                 target="_blank">Wireless Water Tank Level Monitor</a></h3>
             <p>A two-node wireless water tank level monitor built on the RP2040 in bare-metal C- no framework, just
               registers, PIO, and a clock. The transmitter fires the AJ-SR04M ultrasonic sensor with a custom PIO state

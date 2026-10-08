@@ -5,12 +5,16 @@ const hamburger = document.getElementById('hamburger');
 const navLinks = document.querySelector('.nav-links');
 
 hamburger.addEventListener('click', () => {
-  navLinks.classList.toggle('open');
+  const isOpen = navLinks.classList.toggle('open');
+  hamburger.setAttribute('aria-expanded', String(isOpen));
 });
 
 // Close on link click
 document.querySelectorAll('.nav-links a').forEach(link => {
-  link.addEventListener('click', () => navLinks.classList.remove('open'));
+  link.addEventListener('click', () => {
+    navLinks.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+  });
 });
 
 // ── NAVBAR SCROLL HIGHLIGHT ──

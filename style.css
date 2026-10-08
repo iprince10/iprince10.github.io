@@ -1076,3 +1076,54 @@ footer {
     padding-right: 1.2rem;
   }
 }
+
+/* Compact landing screen and recent writing */
+#home.hero {
+  min-height: 640px;
+  height: 100vh;
+  height: 100svh;
+  max-height: 900px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  grid-template-areas: "identity portrait" "identity posts";
+  grid-template-rows: auto auto;
+  align-items: center;
+  align-content: center;
+  justify-content: initial;
+  column-gap: clamp(2rem, 6vw, 5.5rem);
+  row-gap: 1rem;
+  padding: calc(var(--nav-h) + 1.25rem) max(2.5rem, calc((100% - 1080px) / 2)) 2rem;
+}
+
+.hero-identity { grid-area: identity; max-width: 540px; align-self: center; transform: translateY(-0.7rem); }
+.hero-identity .hero-tag { margin-bottom: 0.85rem; }
+.hero-identity .hero-name { font-size: clamp(2.8rem, 5.3vw, 4.65rem); margin-bottom: 0.65rem; }
+.hero-identity .hero-sub { margin-bottom: 1.2rem; }
+.hero-identity .hero-cta { margin-bottom: 1.25rem; }
+.hero-right { grid-area: portrait; justify-self: end; align-self: start; padding: 0 0 1.1rem; transform: translate(2px, -8px); }
+.hero-img { width: clamp(145px, 17vw, 205px); height: clamp(145px, 17vw, 205px); opacity: 0; animation: fadeUp 0.6s ease 0.35s forwards; }
+.recent-posts { grid-area: posts; width: 100%; max-width: none; align-self: center; text-align: left; opacity: 0; animation: fadeUp 0.6s ease 0.65s forwards; }
+.recent-posts-title { font: 700 0.92rem var(--font-mono); letter-spacing: 0.12em; margin-bottom: 0.65rem; }
+.recent-post-card { display: block; padding: 0.8rem 0 0.9rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: border-color var(--transition); }
+.recent-post-card:hover { border-color: var(--accent); }
+.recent-post-kicker { font: 0.65rem var(--font-mono); color: var(--coral); letter-spacing: 0.05em; }
+.recent-post-card h3 { margin: 0.35rem 0; font-size: 1.12rem; line-height: 1.35; }
+.recent-post-card p { color: var(--text-muted); font-size: 0.88rem; line-height: 1.55; }
+.recent-post-read, .recent-posts-all { display: inline-block; margin-top: 0.8rem; font: 0.68rem var(--font-mono); color: var(--accent); }
+.recent-posts-all { margin-top: 0.65rem; }
+
+@media (max-width: 1000px) and (min-width: 769px) {
+  #home.hero { column-gap: 2rem; padding-left: 2rem; padding-right: 2rem; }
+  .hero-right { padding-right: 0; transform: translate(2px, -8px); }
+  .hero-img { width: 155px; height: 155px; }
+}
+
+@media (max-width: 768px) {
+  #home.hero { height: auto; max-height: none; min-height: 0; display: grid; grid-template-columns: 1fr; grid-template-areas: "portrait" "identity" "posts"; gap: 1.4rem; padding: calc(var(--nav-h) + 1.75rem) 1.5rem 2.5rem; text-align: center; }
+  .hero-identity { max-width: 620px; justify-self: center; transform: none; }
+  .hero-identity .hero-name { font-size: clamp(2.8rem, 12vw, 4rem); }
+  .hero-identity .hero-cta, .hero-identity .hero-socials { justify-content: center; }
+.hero-right { justify-self: center; padding: 0; align-self: center; transform: none; }
+  .hero-img { width: 130px; height: 130px; }
+  .recent-posts { max-width: 620px; justify-self: center; text-align: left; margin-top: 1rem; }
+}

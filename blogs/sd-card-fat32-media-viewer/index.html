@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A bare-metal Raspberry Pi Pico reads a 32 GB SDHC card, parses FAT32, and streams RGB565 images to an ILI9341 display." />
+  <title>SD Card FAT32 File Explorer &amp; Media Viewer — Prince Jha</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/blogs/blog.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <nav id="navbar" aria-label="Main navigation">
+    <a class="nav-logo" href="/">PJ<span class="dot">.</span></a>
+    <ul class="nav-links">
+      <li><a href="/#home">Home</a></li><li><a href="/blogs/">Blogs</a></li><li><a href="/#about">About</a></li><li><a href="/#projects">Projects</a></li>
+      <li><a href="/#experience">Experience</a></li><li><a href="/#skills">Skills</a></li><li><a href="/#contact">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+  <main class="blog-page article-page">
+    <header class="article-header">
+      <p class="section-label">Embedded systems · RP2040 · FAT32</p>
+      <h1>SD Card FAT32 File Explorer &amp; Media Viewer</h1>
+      <div class="post-meta"><time datetime="2026-10-09">October 9, 2026</time><span>Project notes</span></div>
+      <p class="article-deck">A Raspberry Pi Pico, programmed bare-metal with no SDK, reads images from a 32 GB SDHC card over SPI and paints them onto a 240 × 320 ILI9341 TFT. The goal is to browse and show files on the device without a PC in the loop.</p>
+    </header>
+    <article class="article-content">
+      <p>The project started with a small end-to-end goal: take an image file from removable storage and draw it on a screen, with the Pico responsible for every step. That simple path expands into several layers: two independent SPI buses, SD-card initialization, block reads, a FAT32 parser, directory traversal, image conversion, and a display pipeline that has to work within tight RAM limits.</p>
+
+      <h2>Hardware and pin map</h2>
+      <p>The Pico talks to the ILI9341 display on SPI0 and the SD-card module on SPI1. The LCD connection is write-only in this setup, so it does not use MISO. UART provides a 115200-baud serial log, the onboard LED is a status indicator, and three buttons provide UP, DOWN, and ENTER input. Each switch connects its GPIO to ground and uses the RP2040's internal pull-up.</p>
+      <table><thead><tr><th>Signal</th><th>Connection</th><th>Purpose</th></tr></thead><tbody>
+        <tr><td>SPI0: SCK, MOSI, CS, D/C, RESET, BL</td><td>GP16–GP21</td><td>ILI9341 display control and pixel data</td></tr>
+        <tr><td>SPI1: SCK, MOSI, MISO, CS</td><td>GP10–GP13</td><td>SD-card module</td></tr>
+        <tr><td>UART0 TX/RX</td><td>GP0/GP1</td><td>115200 8N1 diagnostic log</td></tr>
+        <tr><td>Onboard LED</td><td>GP25</td><td>Status</td></tr>
+        <tr><td>UP / DOWN / ENTER</td><td>GP14 / GP15 / GP22</td><td>Button input with internal pull-ups</td></tr>
+      </tbody></table>
+      <p>The SD module exposes only CS, SCK, MOSI, MISO, VCC, and GND. There is no card-detect signal, so the card must be inserted at boot and firmware cannot detect a card being removed. Touch input is deferred: an XPT2046-family controller would share SPI0 with the LCD and add bus arbitration.</p>
+
+      <h2>Clocks, SPI, and the FIFO constraint</h2>
+      <p>The 12 MHz crystal feeds the PLL, which produces a 125 MHz system clock. The SPI peripheral is PL022-class, full duplex, and has transmit and receive FIFOs only about eight entries deep. Every transmitted byte also creates a received byte. If the receive FIFO is not drained, it fills and the peripheral stalls.</p>
+      <p>The SPI clock is derived from the peripheral clock and divider settings. The useful divider points considered here are:</p>
+      <table><thead><tr><th>Divider</th><th>SPI clock</th></tr></thead><tbody>
+        <tr><td>12</td><td>10.42 MHz (current setting)</td></tr><tr><td>10</td><td>12.5 MHz</td></tr><tr><td>8</td><td>15.625 MHz</td></tr><tr><td>5</td><td>25 MHz</td></tr><tr><td>2</td><td>62.5 MHz theoretical ceiling</td></tr>
+      </tbody></table>
+      <p>The SD bus has to start slowly: cards require an initialization clock in the 100–400 kHz range before switching to the normal transfer rate. The current SD setting is 12.5 MHz, below the 25 MHz SPI-mode limit. The ILI9341 write-cycle figure is 100 ns (10 MHz), so the current 10.42 MHz display clock is marginally above that nominal figure; clock selection is being kept conservative, around 12.5–15 MHz at most for the system's chosen settings.</p>
+      <p>The peripheral supports frames from 4 to 16 bits. In 8-bit mode a pixel needs two writes; in 16-bit mode one write carries the whole RGB565 pixel, with the peripheral sending the most-significant byte first as the panel expects. Batching work matters because a branch and status check for every byte leaves most of the FIFO unused.</p>
+
+      <h2>Talking to the SD card</h2>
+      <p>The card's native protocol is switched into SPI mode at each boot. Initialization sends CMD0 to reset the card, CMD8 to check voltage and version, loops through CMD55 and ACMD41 until the card is ready, reads the OCR with CMD58, and sets a 512-byte block length with CMD16. The CCS bit in the OCR identifies SDHC block addressing, so the filesystem code works in logical block addresses rather than byte offsets.</p>
+      <p>A single-block read uses CMD17. Each command is followed by response polling, dummy 0xFF clock bytes as needed, a 0xFE data token, 512 bytes, and CRC bytes. Reads work, and an integrity check reads each block twice and compares the results. The major performance cost is not just wire time: each CMD17 also pays the card's internal access latency.</p>
+      <p>For long sequential reads, CMD18 can request multiple blocks in one transaction and stream them with less per-block latency. The host must keep chip select asserted through the transfer and stop the stream with CMD12. This is a key optimization candidate for image data.</p>
+
+      <h2>Building FAT32 from sectors</h2>
+      <p>An SD card presents sectors; it does not know about files. The firmware parses the partition and filesystem structures itself:</p>
+      <ol>
+        <li><strong>MBR:</strong> read block 0 and inspect its four 16-byte partition entries beginning at offset 446. The FAT32 LBA partition type is 0x0C; its first-LBA field locates the volume.</li>
+        <li><strong>BPB / volume boot record:</strong> read bytes-per-sector, sectors-per-cluster, reserved-sector count, number and size of FATs, root cluster, and volume serial number.</li>
+        <li><strong>Data-region arithmetic:</strong> data start is reserved sectors plus the number of FATs multiplied by FAT size. A cluster maps to <code>data_start + (cluster - 2) * sectors_per_cluster</code>; clusters begin at number 2 because the first FAT entries are reserved.</li>
+        <li><strong>FAT chain:</strong> each cluster's 32-bit FAT entry uses its low 28 bits. Values at or above 0x0FFFFFF8 mean end-of-chain; 0x0FFFFFF7 marks a bad cluster. One 512-byte FAT sector contains 128 entries.</li>
+        <li><strong>Directory entries:</strong> directories are chains of 32-byte records. A first byte of 0x00 ends the listing, 0xE5 marks a deleted entry, and attribute 0x0F marks a long-filename record. The short entry provides the starting cluster and file size.</li>
+      </ol>
+      <p>Long filenames are stored in records before the corresponding 8.3 entry, in reverse physical order and 13 UTF-16 characters per record. The parser reassembles the pieces and checks their checksum against the short name. If validation fails, it falls back to the 8.3 filename.</p>
+      <p>FAT32's root is an ordinary cluster chain rather than a fixed directory region. That keeps directory traversal consistent: opening a subdirectory and opening root use the same basic operation. The UI can open a file directly from the selected entry's starting cluster, so it does not need a path parser.</p>
+      <p>One bug surfaced in the recursive directory walker. Static local buffers for directory sectors, FAT data, and LFN assembly were shared by every recursion level. A child directory read overwrote the parent's sector while the parent was still iterating. Moving these buffers into a depth-indexed scratch pool gives each active level its own state and allows the recursive walk to finish correctly.</p>
+
+      <h2>Driving the ILI9341</h2>
+      <p>The 240 × 320 panel is initialized with a command table, configured for 16-bit RGB565 pixels, and oriented through MADCTL settings for color order and rotation. The display uses separate command and data phases: D/C low for a command, high for parameters or pixel data. A region is drawn by setting its column and page window with 0x2A and 0x2B, then streaming pixels with 0x2C.</p>
+      <p>Sleep-out needs roughly 120 ms, in addition to other power-up delays. The driver initializes once rather than repeating those delays. The panel also supports hardware scrolling: a list can be scrolled within a defined region and only the row that wraps needs repainting.</p>
+
+      <h2>Streaming images without a framebuffer</h2>
+      <p>A full 240 × 320 RGB565 frame is 153,600 bytes, about 58% of the Pico's 264 KB SRAM. Reserving that much memory would leave too little room for the rest of the firmware, stacks, and useful transfer buffers. The display path therefore streams data from the card to the panel instead of storing a complete frame.</p>
+      <table><thead><tr><th>Memory item</th><th>Size</th></tr></thead><tbody>
+        <tr><td>RP2040 SRAM</td><td>264 KB (256 KB main + 8 KB scratch)</td></tr><tr><td>Full RGB565 frame</td><td>153,600 bytes</td></tr><tr><td>SD sector buffer</td><td>512 bytes</td></tr><tr><td>Directory sector buffer per depth</td><td>512 bytes</td></tr><tr><td>LFN buffer</td><td>261 bytes</td></tr><tr><td>240-pixel-wide, 16-row buffer</td><td>7,680 bytes</td></tr>
+      </tbody></table>
+      <p>A PC-side converter currently turns JPEG images into headerless RGB565 data. The Pico reads the raw file a sector at a time and sends its pixels to the LCD; an end-to-end image transfer from a roughly 300-block file works. The current frame time is about one second.</p>
+
+      <h2>Where the frame time goes</h2>
+      <p>A frame contains 153,600 bytes, or 1,228,800 bits. At 10.42 MHz, the ideal display wire time alone is about 118 ms; at 12.5 MHz it is about 98 ms. Reading 300 sectors at 12.5 MHz adds roughly 98 ms of wire time, plus card access latency for each single-block CMD17 request. A realistic serial path is around 216 ms, while overlapping SD work on one core with LCD work on the other could approach 120 ms.</p>
+      <p>That leaves most of the measured second in software and transfer overhead rather than raw bus bandwidth. Draining the receive FIFO, batching writes, using 16-bit SPI frames, trying multi-block reads with CMD18, and considering DMA are more promising than simply raising the clock. Serial diagnostics also cost time: at roughly 87 microseconds per character, a 1,400-character startup log can consume about 120 ms.</p>
+
+      <h2>From bring-up to a usable explorer</h2>
+      <p>The work has progressed from clocks and GPIO pads, to both SPI buses, display initialization, SD initialization and block reads, FAT32 parsing, root listing, recursive directory walking, and finally image streaming. The filesystem is browsable from diagnostics today; the next milestone is the on-device button-driven file explorer.</p>
+      <p>The UI will not reuse the recursive walker. The walker is designed to visit everything and return; an explorer must show one directory, move a cursor, enter a folder, and later return to the exact previous selection. The planned UI keeps a small breadcrumb stack per directory level, recording the cluster, cursor index, and scroll offset. Since root is a normal directory chain, it needs no special case.</p>
+      <p>The panel refresh cost makes partial redraws important. Moving the cursor should repaint only the old and new rows, roughly 12 ms at the current display clock; a full redraw costs the whole frame transfer plus card and text work. Button handling will debounce for about 20–30 ms, then support a delayed repeat. A small event queue and state machine keep input handling separate from drawing.</p>
+      <p>Opening a selected file routes through a small extension-to-handler table. Raw RGB565 already works. BMP can be streamed by reading its header and converting bottom-up BGR rows; text can use a paged viewer. JPEG decoding is deferred: it would require Huffman decoding, dequantization, IDCT, and upsampling on a chip without an FPU. Keeping the file layer independent lets a decoder arrive later without redesigning the UI.</p>
+
+      <h2>Current status and next work</h2>
+      <ul>
+        <li>Register-level clock, GPIO, and SPI bring-up; both SPI buses are operational.</li>
+        <li>SDHC initialization and block reads work, including a read-twice comparison integrity check.</li>
+        <li>MBR/BPB parsing, cluster-to-LBA mapping, FAT traversal, LFN checksum validation, 8.3 fallback, root listing, and the recursive walker work.</li>
+        <li>The ILI9341 initializes, renders fonts and solid regions, and accepts an image streamed from the SD card.</li>
+        <li>The PC-side JPEG-to-RGB565 conversion works; on-device JPEG decoding and the button-driven explorer remain future steps.</li>
+      </ul>
+      <p>Immediate performance work is to measure the SD and LCD paths separately, fix any receive-FIFO stalls, reduce noisy logging, avoid duplicate initialization, and evaluate CMD18. Then the explorer can be built in stages around the file layer, with dirty-rectangle rendering and button events.</p>
+      <p><a href="https://github.com/iprince10/PicoProjects/tree/main/Pico_SDCard_ILI9341" target="_blank" rel="noopener">View the project source on GitHub</a>.</p>
+      <a class="article-back" href="/blogs/">← Back to all posts</a>
+    </article>
+  </main>
+  <footer class="blog-footer"><a href="/">← Back to portfolio</a><span>© 2026 Prince Jha</span></footer>
+  <script src="/blogs/blog.js"></script>
+</body>
+</html>
