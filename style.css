@@ -107,7 +107,7 @@ a {
 }
 
 .container {
-  max-width: 1080px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0 2rem;
 }
@@ -1260,12 +1260,12 @@ footer {
 
 /* Compact homepage layout inspired by the reference */
 #navbar {
-  padding: 0 max(1.5rem, calc((100% - 1120px) / 2));
+  padding: 0 max(1.5rem, calc((100% - 1320px) / 2));
 }
 
 #home.hero {
   width: 100%;
-  max-width: 1120px;
+  max-width: 1320px;
   min-height: min(100svh, 800px);
   height: auto;
   max-height: none;

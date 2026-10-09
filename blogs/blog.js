@@ -1,15 +1,46 @@
 const menuButton = document.getElementById('hamburger');
 const menuLinks = document.querySelector('.nav-links');
+const hoverCapableMenu = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+let navMenuCloseTimer;
+
+function setNavMenuOpen(isOpen) {
+  menuLinks.classList.toggle('open', isOpen);
+  menuButton.setAttribute('aria-expanded', String(isOpen));
+}
+
+function scheduleNavMenuClose() {
+  clearTimeout(navMenuCloseTimer);
+  navMenuCloseTimer = setTimeout(() => {
+    if (!menuButton.matches(':hover') && !menuLinks.matches(':hover')) setNavMenuOpen(false);
+  }, 140);
+}
 
 menuButton.addEventListener('click', () => {
-  const isOpen = menuLinks.classList.toggle('open');
-  menuButton.setAttribute('aria-expanded', String(isOpen));
+  clearTimeout(navMenuCloseTimer);
+  if (hoverCapableMenu && menuButton.matches(':hover')) {
+    setNavMenuOpen(true);
+    return;
+  }
+  setNavMenuOpen(!menuLinks.classList.contains('open'));
 });
+
+if (hoverCapableMenu) {
+  menuButton.addEventListener('mouseenter', () => {
+    clearTimeout(navMenuCloseTimer);
+    setNavMenuOpen(true);
+  });
+  menuButton.addEventListener('mouseleave', scheduleNavMenuClose);
+  menuLinks.addEventListener('mouseenter', () => {
+    clearTimeout(navMenuCloseTimer);
+    setNavMenuOpen(true);
+  });
+  menuLinks.addEventListener('mouseleave', scheduleNavMenuClose);
+}
 
 menuLinks.querySelectorAll('a').forEach((link) => {
   link.addEventListener('click', () => {
-    menuLinks.classList.remove('open');
-    menuButton.setAttribute('aria-expanded', 'false');
+    clearTimeout(navMenuCloseTimer);
+    setNavMenuOpen(false);
   });
 });
 
