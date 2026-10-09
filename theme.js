@@ -29,7 +29,9 @@
     if (!control) return;
 
     const trigger = control.querySelector('.theme-trigger');
+    const optionsPanel = control.querySelector('.theme-options');
     const options = [...control.querySelectorAll('[data-theme-choice]')];
+    let closeMenuTimer;
 
     function setMenuOpen(open) {
       control.classList.toggle('is-open', open);
@@ -45,8 +47,17 @@
       });
     }
 
-    control.addEventListener('mouseenter', () => setMenuOpen(true));
-    control.addEventListener('mouseleave', () => setMenuOpen(false));
+    function scheduleMenuClose() {
+      clearTimeout(closeMenuTimer);
+      closeMenuTimer = setTimeout(() => setMenuOpen(false), 180);
+    }
+
+    control.addEventListener('mouseenter', () => {
+      clearTimeout(closeMenuTimer);
+      setMenuOpen(true);
+    });
+    control.addEventListener('mouseleave', scheduleMenuClose);
+    optionsPanel.addEventListener('mouseenter', () => clearTimeout(closeMenuTimer));
     trigger.addEventListener('click', () => {
       setMenuOpen(control.matches(':hover') || !control.classList.contains('is-open'));
     });
@@ -59,6 +70,7 @@
     });
     control.addEventListener('keydown', (event) => {
       if (event.key === 'Escape') {
+        clearTimeout(closeMenuTimer);
         setMenuOpen(false);
         trigger.focus();
       }
@@ -74,6 +86,7 @@
         }
         applyTheme();
         refreshMenu();
+        clearTimeout(closeMenuTimer);
         setMenuOpen(control.matches(':hover'));
         trigger.focus();
       });

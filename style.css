@@ -205,6 +205,15 @@ a {
   transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
 }
 
+.theme-options::before {
+  content: '';
+  position: absolute;
+  top: -0.45rem;
+  left: 0;
+  right: 0;
+  height: 0.45rem;
+}
+
 .theme-control:hover .theme-options,
 .theme-control.is-open .theme-options {
   opacity: 1;
