@@ -4,10 +4,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="/theme.js"></script>
   <title>Prince Jha — Embedded Engineer</title>
   <link rel="stylesheet" href="style.css" />
   <link
-    href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
     rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link rel="icon" type="image/webp" href="/princee.webp?v=3">
@@ -27,6 +28,17 @@
       <li><a href="#skills">Skills</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
+    <div class="theme-control">
+      <button class="theme-trigger" type="button" aria-expanded="false" aria-controls="theme-options" aria-label="Color theme: System">
+        <span class="theme-current">System</span>
+        <span class="theme-caret" aria-hidden="true"></span>
+      </button>
+      <div class="theme-options" id="theme-options" aria-label="Color theme options">
+        <button type="button" class="theme-option" data-theme-choice="system">System</button>
+        <button type="button" class="theme-option" data-theme-choice="light">Light</button>
+        <button type="button" class="theme-option" data-theme-choice="dark">Dark</button>
+      </div>
+    </div>
     <button class="hamburger" id="hamburger" aria-label="Toggle menu">
       <span></span><span></span><span></span>
     </button>
@@ -53,14 +65,14 @@
         <div class="hero-img"><img src="princee.webp" alt="Prince Jha" /></div>
       </div>
       <aside class="recent-posts" aria-labelledby="recent-posts-title">
-        <h2 id="recent-posts-title" class="recent-posts-title">MY RECENT POSTS</h2>
+        <h2 id="recent-posts-title" class="recent-posts-title">My Recent Posts</h2>
         <a class="recent-post-card" href="/blogs/sd-card-fat32-media-viewer/">
           <span class="recent-post-kicker">RP2040 · FAT32 · ILI9341</span>
           <h3>SD Card FAT32 File Explorer &amp; Media Viewer</h3>
-          <p>A bare-metal Pico reads a 32 GB SDHC card, walks FAT32 directories, and streams RGB565 images to an ILI9341 display.</p>
+          <p>A bare-metal Pico reads a 32 GB SDHC card, browses FAT32 directories, and streams RGB565 images to an ILI9341 display.</p>
           <span class="recent-post-read">Read post <span aria-hidden="true">→</span></span>
         </a>
-        <a class="recent-posts-all" href="/blogs/">All posts <span aria-hidden="true">→</span></a>
+        <a class="recent-posts-all" href="/blogs/">Read all posts <span aria-hidden="true">→</span></a>
       </aside>
   </section>
 

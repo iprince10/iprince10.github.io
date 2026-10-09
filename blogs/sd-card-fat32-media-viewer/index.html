@@ -4,13 +4,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="/theme.js"></script>
   <meta name="description"
     content="A bare-metal Raspberry Pi Pico reads a 32 GB SDHC card, parses FAT32, and streams RGB565 images to an ILI9341 display." />
   <title>SD Card FAT32 File Explorer &amp; Media Viewer — Prince Jha</title>
   <link rel="stylesheet" href="/style.css" />
   <link rel="stylesheet" href="/blogs/blog.css" />
   <link
-    href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
     rel="stylesheet" />
   <link rel="icon" type="image/webp" href="/princee.webp?v=3">
 </head>
@@ -27,6 +28,17 @@
       <li><a href="/#skills">Skills</a></li>
       <li><a href="/#contact">Contact</a></li>
     </ul>
+    <div class="theme-control">
+      <button class="theme-trigger" type="button" aria-expanded="false" aria-controls="theme-options" aria-label="Color theme: System">
+        <span class="theme-current">System</span>
+        <span class="theme-caret" aria-hidden="true"></span>
+      </button>
+      <div class="theme-options" id="theme-options" aria-label="Color theme options">
+        <button type="button" class="theme-option" data-theme-choice="system">System</button>
+        <button type="button" class="theme-option" data-theme-choice="light">Light</button>
+        <button type="button" class="theme-option" data-theme-choice="dark">Dark</button>
+      </div>
+    </div>
     <button class="hamburger" id="hamburger" aria-label="Toggle menu"
       aria-expanded="false"><span></span><span></span><span></span></button>
   </nav>
