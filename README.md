@@ -1,44 +1,32 @@
-<h1 align="center">
-  <a href="https://iprince10.github.io" target="_blank">Prince Portfolio</a>
-</h1>
+# Prince Jha — Portfolio
 
-<h2>Overview</h2>
-<p>
-A responsive personal portfolio website showcasing my projects, technical skills, and development journey with a Formspree-integrated contact form for seamless user communication. 
-Built using HTML, CSS, and JavaScript with a modular structure, and deployed on GitHub Pages for easy access.
-</p>
+A responsive personal portfolio presenting my work across embedded systems and software development. It brings together selected projects, experience, technical skills, and ways to get in touch, alongside a blog for longer project write-ups.
 
-<h2>Features</h2>
-<ul>
-  <li>Clean and responsive UI design</li>
-  <li>Modular code structure (index.html, style.css, script.js)</li>
-  <li>Interactive front-end elements using JavaScript</li>
-  <li>Contact form integration using Formspree</li>
-  <li>Fully deployed on GitHub Pages</li>
-</ul>
+## Features
 
-<h2>Tech Stack</h2>
-<ul>
-  <li><b>Frontend:</b> HTML, CSS, JavaScript</li>
-  <li><b>Form Handling:</b> Formspree</li>
-  <li><b>Deployment:</b> GitHub Pages</li>
-</ul>
+- Portfolio sections covering projects, experience, technical skills, and contact details
+- Blog index linking to individual posts with project notes and technical details
+- Contact form submissions handled through Formspree
+- Responsive layout and interactive navigation implemented with JavaScript
 
-<h2>Project Structure</h2>
-<pre>
-📁 Portfolio
-│── index.html
-│── style.css
-│── script.js
-│── assets/
-</pre>
+## Project structure
 
-<h2>Live Demo</h2>
-<p>
-<a href="https://iprince10.github.io/" target="_blank">Visit Portfolio</a>
-</p>
+```text
+.
+├── index.html
+├── style.css
+├── script.js
+├── princee.webp
+└── blogs/
+    ├── index.html
+    ├── blog.css
+    ├── blog.js
+    └── <post-folder>/
+        └── index.html
+```
 
-<h2>Contact</h2>
-<p>
-Feel free to reach out via the contact form on the website for collaboration or opportunities :)
-</p>
+The front end is built with HTML, CSS, and JavaScript, with Formspree handling contact form submissions. The site is hosted on GitHub Pages.
+
+## Visit
+
+[iprince10.github.io](https://iprince10.github.io/)
