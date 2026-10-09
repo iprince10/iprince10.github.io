@@ -1,4 +1,4 @@
-# Prince Jha — Portfolio
+# [Prince Jha — Portfolio](https://iprince10.github.io/)
 
 A responsive personal portfolio presenting my work across embedded systems and software development. It brings together selected projects, experience, technical skills, and ways to get in touch, alongside a blog for longer project write-ups.
 
