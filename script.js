@@ -3,17 +3,48 @@
 // ── HAMBURGER MENU ──
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.querySelector('.nav-links');
+const hoverCapableMenu = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+let navMenuCloseTimer;
+
+function setNavMenuOpen(isOpen) {
+  navLinks.classList.toggle('open', isOpen);
+  hamburger.setAttribute('aria-expanded', String(isOpen));
+}
+
+function scheduleNavMenuClose() {
+  clearTimeout(navMenuCloseTimer);
+  navMenuCloseTimer = setTimeout(() => {
+    if (!hamburger.matches(':hover') && !navLinks.matches(':hover')) setNavMenuOpen(false);
+  }, 140);
+}
 
 hamburger.addEventListener('click', () => {
-  const isOpen = navLinks.classList.toggle('open');
-  hamburger.setAttribute('aria-expanded', String(isOpen));
+  clearTimeout(navMenuCloseTimer);
+  if (hoverCapableMenu && hamburger.matches(':hover')) {
+    setNavMenuOpen(true);
+    return;
+  }
+  setNavMenuOpen(!navLinks.classList.contains('open'));
 });
+
+if (hoverCapableMenu) {
+  hamburger.addEventListener('mouseenter', () => {
+    clearTimeout(navMenuCloseTimer);
+    setNavMenuOpen(true);
+  });
+  hamburger.addEventListener('mouseleave', scheduleNavMenuClose);
+  navLinks.addEventListener('mouseenter', () => {
+    clearTimeout(navMenuCloseTimer);
+    setNavMenuOpen(true);
+  });
+  navLinks.addEventListener('mouseleave', scheduleNavMenuClose);
+}
 
 // Close on link click
 document.querySelectorAll('.nav-links a').forEach(link => {
   link.addEventListener('click', () => {
-    navLinks.classList.remove('open');
-    hamburger.setAttribute('aria-expanded', 'false');
+    clearTimeout(navMenuCloseTimer);
+    setNavMenuOpen(false);
   });
 });
 
