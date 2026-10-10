@@ -20,10 +20,6 @@ function scheduleNavMenuClose() {
 
 hamburger.addEventListener('click', () => {
   clearTimeout(navMenuCloseTimer);
-  if (hoverCapableMenu && hamburger.matches(':hover')) {
-    setNavMenuOpen(true);
-    return;
-  }
   setNavMenuOpen(!navLinks.classList.contains('open'));
 });
 
@@ -46,6 +42,21 @@ document.querySelectorAll('.nav-links a').forEach(link => {
     clearTimeout(navMenuCloseTimer);
     setNavMenuOpen(false);
   });
+});
+
+document.addEventListener('pointerdown', (event) => {
+  if (!navLinks.contains(event.target) && !hamburger.contains(event.target)) {
+    clearTimeout(navMenuCloseTimer);
+    setNavMenuOpen(false);
+  }
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && navLinks.classList.contains('open')) {
+    clearTimeout(navMenuCloseTimer);
+    setNavMenuOpen(false);
+    hamburger.focus();
+  }
 });
 
 // ── NAVBAR SCROLL HIGHLIGHT ──

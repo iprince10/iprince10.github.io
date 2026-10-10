@@ -1,5 +1,5 @@
 /* PRINCE JHA — PORTFOLIO CSS
-   Theme: Light Editorial · Indigo + Coral */
+   Theme: Light Editorial · Indigo + Blue */
 :root {
   color-scheme: light;
   --bg: #fafaf8;
@@ -22,9 +22,9 @@
   --accent-dim2: rgba(61, 55, 201, 0.15);
   --button-text: #ffffff;
 
-  /* Secondary accent — coral/rose */
-  --coral: #e85d4a;
-  --coral-dim: rgba(232, 93, 74, 0.1);
+  /* Blue accent for section labels and supporting highlights */
+  --highlight-blue: #2563eb;
+  --highlight-blue-dim: rgba(37, 99, 235, 0.1);
 
   /* Tertiary — sage green */
   --sage: #3a7d5e;
@@ -58,8 +58,8 @@
   --accent-dim: rgba(170, 165, 255, 0.12);
   --accent-dim2: rgba(170, 165, 255, 0.24);
   --button-text: #17152e;
-  --coral: #ff9586;
-  --coral-dim: rgba(255, 149, 134, 0.14);
+  --highlight-blue: #60a5fa;
+  --highlight-blue-dim: rgba(96, 165, 250, 0.16);
   --sage: #8bcfa3;
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.28), 0 1px 2px rgba(0, 0, 0, 0.2);
   --shadow: 0 4px 16px rgba(0, 0, 0, 0.32), 0 1px 4px rgba(0, 0, 0, 0.22);
@@ -138,7 +138,7 @@ a {
 }
 
 .nav-logo .dot {
-  color: var(--coral);
+  color: var(--highlight-blue);
 }
 
 .theme-control {
@@ -219,15 +219,6 @@ a {
   visibility: visible;
   transform: translateY(0);
   pointer-events: auto;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .theme-control:hover .theme-options {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-    pointer-events: auto;
-  }
 }
 
 .theme-option {
@@ -553,7 +544,7 @@ a {
 }
 
 .badge-sep {
-  color: var(--coral) !important;
+  color: var(--highlight-blue) !important;
   font-size: 0.55rem;
 }
 
@@ -667,7 +658,7 @@ a {
 .section-label {
   font-family: var(--font-mono);
   font-size: 0.7rem;
-  color: var(--coral);
+  color: var(--highlight-blue);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   margin-bottom: 0.8rem;
@@ -681,7 +672,7 @@ a {
   flex: 1;
   max-width: 48px;
   height: 1px;
-  background: var(--coral);
+  background: var(--highlight-blue);
   opacity: 0.4;
 }
 
@@ -780,7 +771,7 @@ a {
 .edu-year {
   font-family: var(--font-mono);
   font-size: 0.68rem;
-  color: var(--coral);
+  color: var(--highlight-blue);
   min-width: 80px;
   padding-top: 0.25rem;
   letter-spacing: 0.04em;
@@ -894,7 +885,7 @@ a {
   font-family: var(--font-mono);
   font-size: 2.4rem;
   font-weight: 700;
-  color: var(--border);
+  color: var(--highlight-blue);
   line-height: 1;
   flex-shrink: 0;
   transition: color var(--transition);
@@ -902,7 +893,7 @@ a {
 }
 
 .project-card:hover .project-number {
-  color: var(--accent-dim2);
+  color: var(--highlight-blue);
 }
 
 .project-body h3 {
@@ -983,16 +974,16 @@ a {
   top: 0.4rem;
   width: 9px;
   height: 9px;
-  background: var(--coral);
+  background: var(--highlight-blue);
   border-radius: 50%;
   border: 2px solid var(--bg-alt);
-  box-shadow: 0 0 0 2px var(--coral);
+  box-shadow: 0 0 0 2px var(--highlight-blue);
 }
 
 .timeline-date {
   font-family: var(--font-mono);
   font-size: 0.7rem;
-  color: var(--coral);
+  color: var(--highlight-blue);
   letter-spacing: 0.08em;
   margin-bottom: 0.4rem;
 }
@@ -1274,7 +1265,7 @@ footer {
 .recent-posts-title { font: 700 0.92rem var(--font-mono); letter-spacing: 0.12em; margin-bottom: 0.65rem; }
 .recent-post-card { display: block; padding: 0.8rem 0 0.9rem; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); transition: border-color var(--transition); }
 .recent-post-card:hover { border-color: var(--accent); }
-.recent-post-kicker { font: 0.65rem var(--font-mono); color: var(--coral); letter-spacing: 0.05em; }
+.recent-post-kicker { font: 0.65rem var(--font-mono); color: var(--highlight-blue); letter-spacing: 0.05em; }
 .recent-post-card h3 { margin: 0.35rem 0; font-size: 1.12rem; line-height: 1.35; }
 .recent-post-card p { color: var(--text-muted); font-size: 0.88rem; line-height: 1.55; }
 .recent-post-read, .recent-posts-all { display: inline-block; margin-top: 0.8rem; font: 0.68rem var(--font-mono); color: var(--accent); }
@@ -1391,7 +1382,7 @@ footer {
   outline-offset: 4px;
 }
 
-.recent-post-kicker { font: 0.65rem var(--font-mono); color: var(--coral); letter-spacing: 0.05em; }
+.recent-post-kicker { font: 0.65rem var(--font-mono); color: var(--highlight-blue); letter-spacing: 0.05em; }
 .recent-post-card h3 { margin: 0.4rem 0; font-size: 1.2rem; line-height: 1.35; }
 .recent-post-card p { max-width: 760px; color: var(--text-muted); font-size: 0.88rem; line-height: 1.55; }
 .recent-post-read,

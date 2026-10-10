@@ -4,12 +4,12 @@
 .blog-heading .accent { color: var(--accent); }
 .blog-intro { max-width: 570px; color: var(--text-muted); }
 .post-listing { padding: 1.6rem 0; border-top: 1px solid var(--border); }
-.post-meta { display: flex; flex-wrap: wrap; gap: 0.35rem 1rem; color: var(--coral); font: 0.68rem var(--font-mono); letter-spacing: 0.02em; }
+.post-meta { display: flex; flex-wrap: wrap; gap: 0.35rem 1rem; color: var(--highlight-blue); font: 0.68rem var(--font-mono); letter-spacing: 0.02em; }
 .post-listing h2 { margin: 0.55rem 0 0.4rem; font-size: clamp(1.2rem, 3vw, 1.65rem); line-height: 1.35; }
 .post-listing h2 a:hover { color: var(--accent); }
 .post-listing p { max-width: 720px; color: var(--text-muted); font-size: 0.94rem; }
 .post-link { display: inline-block; margin-top: 0.6rem; color: var(--accent); font: 0.72rem var(--font-mono); }
-.post-link:hover, .blog-footer a:hover { color: var(--coral); }
+.post-link:hover, .blog-footer a:hover { color: var(--highlight-blue); }
 .blog-footer { display: flex; justify-content: space-between; gap: 1rem; padding: 1.25rem max(2rem, calc((100% - 900px) / 2)); border-top: 1px solid var(--border); background: var(--bg-alt); color: var(--text-muted); font: 0.7rem var(--font-mono); }
 .article-page { max-width: 850px; padding-top: calc(var(--nav-h) + 3.5rem); }
 .article-header { max-width: 720px; margin-bottom: 2rem; }
@@ -29,7 +29,7 @@
 .article-content pre { overflow-x: auto; margin: 1rem 0 1.4rem; padding: 1.15rem 1.3rem; border: 1px solid var(--border); border-radius: var(--radius-lg); background: #18191f; color: #f0eee9; font: 0.78rem/1.7 'Inter', sans-serif; }
 .article-content code { font-family: 'Inter', sans-serif; }
 .article-content :not(pre) > code { padding: 0.1rem 0.3rem; border-radius: 4px; background: var(--surface-2); color: var(--accent); font-size: 0.83em; }
-.article-callout { margin: 1.5rem 0; padding: 1rem 1.2rem; border-left: 3px solid var(--coral); background: var(--surface); color: var(--text-muted); }
+.article-callout { margin: 1.5rem 0; padding: 1rem 1.2rem; border-left: 3px solid var(--highlight-blue); background: var(--surface); color: var(--text-muted); }
 .article-back { display: inline-block; margin-top: 2.5rem; color: var(--accent); font: 0.72rem var(--font-mono); }
 @media (max-width: 768px) { .blog-page { padding: calc(var(--nav-h) + 2.5rem) 1.3rem 3rem; } .blog-footer { padding: 1.1rem 1.3rem; } .article-page { padding-top: calc(var(--nav-h) + 2.5rem); } }
 @media (max-width: 480px) { .blog-footer { flex-direction: column; } }

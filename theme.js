@@ -62,7 +62,7 @@
       optionsPanel.addEventListener('mouseenter', () => clearTimeout(closeMenuTimer));
     }
     trigger.addEventListener('click', () => {
-      setMenuOpen(hoverCapable && control.matches(':hover') || !control.classList.contains('is-open'));
+      setMenuOpen(!control.classList.contains('is-open'));
     });
     trigger.addEventListener('keydown', (event) => {
       if (event.key === 'ArrowDown') {
@@ -90,8 +90,7 @@
         applyTheme();
         refreshMenu();
         clearTimeout(closeMenuTimer);
-        setMenuOpen(hoverCapable && control.matches(':hover'));
-        trigger.focus();
+        setMenuOpen(false);
       });
     });
 
