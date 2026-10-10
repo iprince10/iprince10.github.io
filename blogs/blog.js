@@ -1,3 +1,22 @@
+const navbar = document.getElementById('navbar');
+let previousScrollY = window.scrollY;
+let navScrollFrame = false;
+
+window.addEventListener('scroll', () => {
+  if (navScrollFrame) return;
+  navScrollFrame = true;
+  window.requestAnimationFrame(() => {
+    const currentScrollY = window.scrollY;
+    if (currentScrollY <= 8 || currentScrollY < previousScrollY - 4) {
+      navbar.classList.remove('nav-hidden');
+    } else if (currentScrollY > previousScrollY + 4) {
+      navbar.classList.add('nav-hidden');
+    }
+    previousScrollY = currentScrollY;
+    navScrollFrame = false;
+  });
+}, { passive: true });
+
 const menuButton = document.getElementById('hamburger');
 const menuLinks = document.querySelector('.nav-links');
 const hoverCapableMenu = window.matchMedia('(hover: hover) and (pointer: fine)').matches;

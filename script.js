@@ -1,5 +1,25 @@
 // PRINCE JHA — PORTFOLIO JS
 
+// Hide the navigation while scrolling down and reveal it while scrolling up.
+const navbar = document.getElementById('navbar');
+let previousScrollY = window.scrollY;
+let navScrollFrame = false;
+
+window.addEventListener('scroll', () => {
+  if (navScrollFrame) return;
+  navScrollFrame = true;
+  window.requestAnimationFrame(() => {
+    const currentScrollY = window.scrollY;
+    if (currentScrollY <= 8 || currentScrollY < previousScrollY - 4) {
+      navbar.classList.remove('nav-hidden');
+    } else if (currentScrollY > previousScrollY + 4) {
+      navbar.classList.add('nav-hidden');
+    }
+    previousScrollY = currentScrollY;
+    navScrollFrame = false;
+  });
+}, { passive: true });
+
 // ── HAMBURGER MENU ──
 const hamburger = document.getElementById('hamburger');
 const navLinks = document.querySelector('.nav-links');
