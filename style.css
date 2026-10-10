@@ -214,12 +214,20 @@ a {
   height: 0.45rem;
 }
 
-.theme-control:hover .theme-options,
 .theme-control.is-open .theme-options {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
   pointer-events: auto;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .theme-control:hover .theme-options {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
 }
 
 .theme-option {
@@ -290,26 +298,44 @@ a {
   .theme-control { margin-left: auto; margin-right: 0.75rem; }
 
   .nav-links {
-    display: none;
+    display: flex;
     position: absolute;
     top: var(--nav-h);
-    left: 0;
-    right: 0;
+    right: 0.75rem;
+    left: auto;
+    width: min(78vw, 300px);
+    max-height: calc(100dvh - var(--nav-h) - 1.5rem);
+    overflow-y: auto;
     background: var(--surface);
-    border-bottom: 1px solid var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
     flex-direction: column;
     gap: 0;
-    padding: 1rem 0;
-    text-align: center;
+    padding: 0.65rem 0;
+    text-align: left;
     margin-left: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(0.5rem);
+    pointer-events: none;
+    transition: opacity var(--transition), transform var(--transition), visibility var(--transition);
   }
 
   .nav-links.open {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    pointer-events: auto;
   }
 
   .nav-links li {
-    padding: 0.7rem 0;
+    padding: 0;
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 0.8rem 1.1rem;
   }
 }
 

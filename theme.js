@@ -31,6 +31,7 @@
     const trigger = control.querySelector('.theme-trigger');
     const optionsPanel = control.querySelector('.theme-options');
     const options = [...control.querySelectorAll('[data-theme-choice]')];
+    const hoverCapable = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     let closeMenuTimer;
 
     function setMenuOpen(open) {
@@ -52,14 +53,16 @@
       closeMenuTimer = setTimeout(() => setMenuOpen(false), 180);
     }
 
-    control.addEventListener('mouseenter', () => {
-      clearTimeout(closeMenuTimer);
-      setMenuOpen(true);
-    });
-    control.addEventListener('mouseleave', scheduleMenuClose);
-    optionsPanel.addEventListener('mouseenter', () => clearTimeout(closeMenuTimer));
+    if (hoverCapable) {
+      control.addEventListener('mouseenter', () => {
+        clearTimeout(closeMenuTimer);
+        setMenuOpen(true);
+      });
+      control.addEventListener('mouseleave', scheduleMenuClose);
+      optionsPanel.addEventListener('mouseenter', () => clearTimeout(closeMenuTimer));
+    }
     trigger.addEventListener('click', () => {
-      setMenuOpen(control.matches(':hover') || !control.classList.contains('is-open'));
+      setMenuOpen(hoverCapable && control.matches(':hover') || !control.classList.contains('is-open'));
     });
     trigger.addEventListener('keydown', (event) => {
       if (event.key === 'ArrowDown') {
@@ -87,7 +90,7 @@
         applyTheme();
         refreshMenu();
         clearTimeout(closeMenuTimer);
-        setMenuOpen(control.matches(':hover'));
+        setMenuOpen(hoverCapable && control.matches(':hover'));
         trigger.focus();
       });
     });
