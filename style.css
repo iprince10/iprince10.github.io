@@ -303,7 +303,9 @@ a {
     top: var(--nav-h);
     right: 0.75rem;
     left: auto;
-    width: min(78vw, 300px);
+    width: max-content;
+    min-width: 0;
+    max-width: calc(100vw - 1.5rem);
     max-height: calc(100dvh - var(--nav-h) - 1.5rem);
     overflow-y: auto;
     background: var(--surface);
@@ -336,6 +338,7 @@ a {
   .nav-links a {
     display: block;
     padding: 0.8rem 1.1rem;
+    white-space: nowrap;
   }
 }
 
