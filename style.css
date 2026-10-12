@@ -907,9 +907,11 @@ a {
   color: var(--highlight-blue);
 }
 
-.project-body h3 {
-  font-size: 1.08rem;
+.project-body h2 {
+  font-size: clamp(1.3rem, 2vw, 1.5rem);
   font-weight: 600;
+  line-height: 1.25;
+  margin-top: 0;
   margin-bottom: 0.6rem;
   color: var(--text);
   letter-spacing: -0.01em;
@@ -943,14 +945,14 @@ a {
   border: 1px solid var(--accent-dim2);
 }
 
-.project-body h3 a {
+.project-body h2 a {
   color: inherit;
   text-decoration: none;
   border-bottom: 1.5px solid var(--accent-dim2);
   transition: border-color var(--transition), color var(--transition);
 }
 
-.project-body h3 a:hover {
+.project-body h2 a:hover {
   color: var(--accent);
   border-bottom-color: var(--accent);
 }

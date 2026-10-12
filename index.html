@@ -141,8 +141,8 @@
         <div class="project-card">
           <div class="project-number">01</div>
           <div class="project-body">
-            <h3><a href="https://github.com/iprince10/Wireless_Water_Tank_Level_Monitor" target="_blank">Wireless Water
-                Tank Level Monitor</a></h3>
+            <h2><a href="https://github.com/iprince10/Wireless_Water_Tank_Level_Monitor" target="_blank">Wireless Water
+                Tank Level Monitor</a></h2>
             <p>A two-node wireless water tank level monitor built on the RP2040 in bare-metal C- no framework, just
               registers, PIO, and a clock. The transmitter fires the AJ-SR04M ultrasonic sensor with a custom PIO state
               machine that captures the echo width, using a hardware-generated trigger pulse and timeout, then ships
@@ -158,9 +158,9 @@
               standalone and portable.
             </p>
             <div class="project-tags">
-              <span>Raspberry Pi Pico</span><span>Bare-Metal C</span><span>RP2040</span><span>PIO</span><span>LoRa UART
+              <span>Embedded C</span><span>Raspberry Pi Pico</span><span>Register-Level Programming</span><span>RP2040</span><span>PIO</span><span>LoRa UART
                 Module (E32433T20D)</span><span>Dual-Core (SIO FIFO)</span><span>ILI9341</span><span>Altium- PCB
-                Design</span><span>Single Layered PCB</span><span>Rechargeable power supply</span>
+                Design</span><span>Single Layered PCB</span><span>Rechargeable Lion power supply</span>
             </div>
           </div>
         </div>
@@ -168,12 +168,12 @@
         <div class="project-card">
           <div class="project-number">02</div>
           <div class="project-body">
-            <h3> <a href="https://github.com/iprince10/PicoProjects/tree/main/Pico_SDCard_ILI9341">SD Card FAT32 File
-                Explorer & Media Viewer for ILI9341 Display</a></h3>
-            <p>Built a bare-metal SD card storage stack and display pipeline on the RP2040 using register-level SPI
-              programming, with no vendor SDK or HAL.
-            </p>
-            <p class="project-detail">Wrote the SD SPI-mode initialisation sequence (CMD0, CMD8, ACMD41, CMD58, CMD16)
+            <h2> <a href="https://github.com/iprince10/Pico_Media_FS">Pico_Media_FS</a></h2>
+            <p>SD Card FAT32 File Explorer & Media Viewer for ILI9341 Display :</p>
+            <p class="project-detail">Built a bare-metal SD card storage stack and display pipeline on the RP2040 using
+              register-level SPI
+              programming, with no vendor SDK or HAL. Wrote the SD SPI-mode initialisation sequence (CMD0, CMD8, ACMD41,
+              CMD58, CMD16)
               with response polling and timeout handling for SDHC cards, then read 512-byte blocks with CMD17. Parsed
               the MBR partition table and FAT32 BPB by hand and traversed the FAT cluster chain to walk directory
               entries, match 8.3 filenames, and reassemble multi-block files from the card.</p>
@@ -189,9 +189,9 @@
               file browser using push buttons reading the directory tree live, and an image viewer with a render
               progress bar.</p>
             <div class="project-tags">
-              <span>RaspberryPi Pico</span><span>Bare-Metal
-                C</span><span>RP2040</span><span>SPI</span><span>FAT32</span><span>ILI9341</span><span>DMA</span><span>RGB565</span><span>JPEG
-                Decoder</span><span> UI</span>
+              <span>Embedded C</span><span>Raspberry Pi Pico</span><span>Register-Level Programming
+                </span><span>RP2040</span><span>SPI</span><span>FAT32 Filesystem</span><span>ILI9341 TFT</span><span>DMA</span><span>RGB565</span><span>JPEG
+                JPG PNG</span><span>Custom File Explorer UI</span><span>UART</span><span>SD Protocol</span>
             </div>
           </div>
         </div>
@@ -200,8 +200,8 @@
           <div class="project-number">03</div>
           <div class="project-body">
             <!-- <h3>VitalSync — Health Monitoring System</h3> -->
-            <h3><a href="https://iprince10.github.io/VitalSync_HealthMonitoringSystem/" target="_blank">VitalSync —
-                Health Monitoring System</a></h3>
+            <h2><a href="https://iprince10.github.io/VitalSync_HealthMonitoringSystem/" target="_blank">VitalSync —
+                Health Monitoring System</a></h2>
             <p>Wall-powered IoT health station on ESP32 measuring heart rate, SpO₂ &amp; body temperature via MAX30102
               and DS18B20. Custom BPM peak-detection (EMA) and Maxim's ratio-of-ratios SpO₂ algorithm over 100-sample
               rolling buffer.</p>
@@ -209,7 +209,7 @@
               sync to Arduino IoT Cloud, and hand-soldered 6×4 perfboard with regulated 12V→5V→3.3V power chain (LM2596
               + AMS1117). Project showcase site deployed via GitHub Pages.</p>
             <div class="project-tags">
-              <span>ESP32</span><span>C++/Arduino</span><span>MAX30102</span><span>DS18B20</span><span>MQTT</span><span>Arduino
+              <span>ESP32</span><span>C++ / Arduino Ino</span><span>MAX30102</span><span>DS18B20</span><span>MQTT</span><span>Arduino
                 IoT Cloud</span><span>Github Pages</span>
             </div>
           </div>
@@ -218,8 +218,8 @@
         <div class="project-card">
           <div class="project-number">04</div>
           <div class="project-body">
-            <h3><a href="https://github.com/iprince10/Smart-Display-System" target="_blank">Smart Display System</a>
-            </h3>
+            <h2><a href="https://github.com/iprince10/Smart-Display-System" target="_blank">Smart Display System</a>
+            </h2>
             <p>Smart information dashboard on Raspberry Pi displaying live time/date, real-time weather, top news
               headlines, motivational quotes, and an editable to-do list. Developed during research internship at IIIT
               Guwahati.</p>
@@ -235,11 +235,12 @@
         <div class="project-card">
           <div class="project-number">05</div>
           <div class="project-body">
-            <h3>Personal Portfolio Website</h3>
+            <h2>Personal Portfolio Website</h2>
             <p>A responsive personal portfolio website showcasing my projects, technical skills, and development journey
               with a Formspree-integrated
               contact form for direct user communication. Built using HTML, CSS, and JavaScript with a clean, modular
-              structure, it includes dedicated blog/posts pages for technical write-ups, customizable light and dark themes
+              structure, it includes dedicated blog/posts pages for technical write-ups, customizable light and dark
+              themes
               with a system mode, and navigation designed for desktop, tablet, and mobile screens. Deployed on GitHub
               Pages for easy access and sharing.</p>
             <div class="project-tags">
