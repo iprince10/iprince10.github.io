@@ -36,10 +36,6 @@ function scheduleNavMenuClose() {
 
 menuButton.addEventListener('click', () => {
   clearTimeout(navMenuCloseTimer);
-  if (hoverCapableMenu && menuButton.matches(':hover')) {
-    setNavMenuOpen(true);
-    return;
-  }
   setNavMenuOpen(!menuLinks.classList.contains('open'));
 });
 
@@ -63,8 +59,19 @@ menuLinks.querySelectorAll('a').forEach((link) => {
   });
 });
 
+document.addEventListener('pointerdown', (event) => {
+  if (!menuLinks.contains(event.target) && !menuButton.contains(event.target)) setNavMenuOpen(false);
+});
+
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape' && menuLinks.classList.contains('open')) {
+    setNavMenuOpen(false);
+    menuButton.focus();
+  }
+});
+
 const revealItems = document.querySelectorAll(
-  '.blog-heading > *, .post-listing, .article-header > *, .article-content > *, .blog-footer'
+  '.blog-heading > *, .post-listing, .article-header > *, .article-content > *, .article-back, .blog-footer > *'
 );
 
 if ('IntersectionObserver' in window) {
@@ -73,7 +80,7 @@ if ('IntersectionObserver' in window) {
   const revealObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry, index) => {
       if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), index * 60);
+        setTimeout(() => entry.target.classList.add('visible'), index * 30);
         observer.unobserve(entry.target);
       }
     });

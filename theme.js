@@ -61,7 +61,13 @@
       control.addEventListener('mouseleave', scheduleMenuClose);
       optionsPanel.addEventListener('mouseenter', () => clearTimeout(closeMenuTimer));
     }
-    trigger.addEventListener('click', () => {
+    trigger.addEventListener('click', (event) => {
+      // On hover devices, mouseenter already opens the menu. Keep a click from
+      // immediately closing it; keyboard activation and touch still toggle.
+      if (hoverCapable && event.detail > 0) {
+        setMenuOpen(true);
+        return;
+      }
       setMenuOpen(!control.classList.contains('is-open'));
     });
     trigger.addEventListener('keydown', (event) => {

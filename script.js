@@ -98,18 +98,23 @@ window.addEventListener('scroll', highlightNav, { passive: true });
 
 // ── SCROLL REVEAL ──
 const revealEls = document.querySelectorAll(
-  '.about-grid, .edu-card, .skill-group, .project-card, .timeline-item, .achieve-item, .contact-link, .contact-form, .about-stats, .stat'
+  '.hero-identity, .hero-right, .recent-posts, .about-grid, .edu-card, .skill-group, .project-card, .timeline-item, .achievements, .achieve-item, .contact-link, .contact-form, .section-label, .section-title, .contact-sub, .footer-inner > *'
 );
 
 revealEls.forEach(el => el.classList.add('reveal'));
 
-const io = new IntersectionObserver((entries) => {
-  entries.forEach((e, i) => {
-    if (e.isIntersecting) {
-      setTimeout(() => e.target.classList.add('visible'), i * 60);
-      io.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.1 });
-
-revealEls.forEach(el => io.observe(el));
+if ('IntersectionObserver' in window) {
+  const io = new IntersectionObserver((entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const siblings = [...entry.target.parentElement.children].filter(el => el.classList.contains('reveal'));
+        const order = siblings.indexOf(entry.target);
+        setTimeout(() => entry.target.classList.add('visible'), Math.max(0, order) * 30);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  revealEls.forEach(el => io.observe(el));
+} else {
+  revealEls.forEach(el => el.classList.add('visible'));
+}

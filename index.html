@@ -17,7 +17,7 @@
   <!-- NAV -->
   <nav id="navbar">
     <div class="nav-logo">PJ<span class="dot">.</span></div>
-    <ul class="nav-links">
+    <ul class="nav-links" id="primary-navigation">
       <li><a href="#home">Home</a></li>
       <li><a href="/blogs/">Blogs</a></li>
       <li><a href="#about">About</a></li>
@@ -38,7 +38,7 @@
         <button type="button" class="theme-option" data-theme-choice="dark">Dark</button>
       </div>
     </div>
-    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false" aria-controls="primary-navigation">
       <span></span><span></span><span></span>
     </button>
   </nav>
