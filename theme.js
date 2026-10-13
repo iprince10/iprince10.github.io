@@ -29,6 +29,7 @@
     if (!control) return;
 
     const trigger = control.querySelector('.theme-trigger');
+    const caret = control.querySelector('.theme-caret');
     const optionsPanel = control.querySelector('.theme-options');
     const options = [...control.querySelectorAll('[data-theme-choice]')];
     const hoverCapable = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
@@ -50,7 +51,9 @@
 
     function scheduleMenuClose() {
       clearTimeout(closeMenuTimer);
-      closeMenuTimer = setTimeout(() => setMenuOpen(false), 180);
+      closeMenuTimer = setTimeout(() => {
+        if (!control.matches(':hover')) setMenuOpen(false);
+      }, 140);
     }
 
     if (hoverCapable) {
@@ -62,6 +65,11 @@
       optionsPanel.addEventListener('mouseenter', () => clearTimeout(closeMenuTimer));
     }
     trigger.addEventListener('click', (event) => {
+      if (caret.contains(event.target)) {
+        clearTimeout(closeMenuTimer);
+        setMenuOpen(false);
+        return;
+      }
       // On hover devices, mouseenter already opens the menu. Keep a click from
       // immediately closing it; keyboard activation and touch still toggle.
       if (hoverCapable && event.detail > 0) {
