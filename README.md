@@ -1,4 +1,4 @@
-# [Prince Jha — Portfolio](https://iprince10.github.io/)
+# [Prince Jha — Portfolio](https://princejha.is-a.dev/)
 
 A responsive personal portfolio presenting my work across embedded systems and software development. It brings together selected projects, experience, technical skills, and ways to get in touch, alongside a blog for longer project write-ups.
 
@@ -29,4 +29,4 @@ The front end is built with HTML, CSS, and JavaScript, with Formspree handling c
 
 ## Visit
 
-[iprince10.github.io](https://iprince10.github.io/)
+[princejha.is-a.dev](https://princejha.is-a.dev/)
